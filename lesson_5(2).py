@@ -1,7 +1,7 @@
 '''
 ****************************************************************************
 *  Program  lessson_5.py                                                   *
-*  Author   Aris C                                                           *
+*  Author   Aris C                                                         *
 *  Date     March 16, 2021                                                 *
 *  Source   Realpython https://realpython.com/python-sql-libraries/#sqlite *
 *  Description:                                                            *
@@ -73,10 +73,8 @@ CREATE TABLE IF NOT EXISTS staff (
   position TEXT NOT NULL
 );
 """
-
-##########################  Create Pod Leader table variable query ################
-create_pod_leader_table_query = """
-CREATE TABLE IF NOT EXISTS staff (
+create_pod_member_table_query = """
+CREATE TABLE IF NOT EXISTS pod (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
   cell TEXT NOT NULL,
@@ -84,10 +82,20 @@ CREATE TABLE IF NOT EXISTS staff (
 );
 """
 
-#################### Executive query to create staff/pod leader table #################
-execute_query(connection, create_staff_member_table_query) 
-execute_query(connection, create_pod_leader_table_query) 
+create_pod_leader_table_query = """
+CREATE TABLE IF NOT EXISTS podL (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  cell TEXT NOT NULL,
+  position TEXT NOT NULL
+);
+"""
+##########################  Create Pod Leader table variable query ################
 
+#################### Executive query to create staff/pod leader table #################
+execute_query(connection, create_staff_member_table_query)
+execute_query(connection, create_pod_member_table_query)
+execute_query(connection, create_pod_leader_table_query)
 ################# Create insert query to add staff members to staff table #######
 add_staff_members_query = """
 INSERT INTO
@@ -98,39 +106,56 @@ VALUES
   ('Hodari','(510) 435-2594','Curriculum Lead'),
   ('Akeeem','(415) 684-0505','Programs Director');
 """
-#######
-add_pod_leader_query = """
+
+add_pod_members_query = """
 INSERT INTO
   pod (name,cell,position)
 VALUES
-  ('Aris','510.229.6359','Pod leader'),
-  ('Andrew','(925) 727-4611', 'Pod leader'),
-  ('Richard','(510) 228-5623','Pod leader'),
-  ('Jacoree','(845) 200-62505','Pod leader');
-  ('Gabe','(510) 326-5834','Pod leader');
+  ('Aris','510.205.0980','Senior Innovation Educator'),
+  ('Hyab','111.111.1111', 'Executive Director'),
+  ('Milan','(510) 435-2594','Curriculum Lead'),
+  ('Zyion','(415) 684-0505','Programs Director');
+"""
+
+add_pod_leaders_query = """
+INSERT INTO
+  podL (name,cell,position)
+VALUES
+  ('Aris','510.205.0980','Senior Innovation Educator'),
+  ('Jacore','111.111.1111', 'Executive Director'),
+  ('Andrew','(510) 435-2594','Curriculum Lead'),
+  ('Richard','(415) 684-0505','Programs Director');
 """
 ####################  Execute insert staff members query ##################
 execute_query(connection, add_staff_members_query)
+execute_query(connection, add_pod_members_query)
+execute_query(connection, add_pod_leaders_query)
 
 
 ####################  Execute insert Pod Leader query ##################
-execute_query(connection, add_pod_leader_query)
 
 
 ########################### Display staff_member Query ##################### 
 display_staff_query = "SELECT * from staff"
 staff = execute_read_query(connection, display_staff_query) ##Tuple
 
-
-########################### Display staff_member Query ##################### 
 display_pod_query = "SELECT * from pod"
-staff = execute_read_query(connection, display_pod_query) ##Tuple
+pod = execute_read_query(connection, display_pod_query) ##Tuple
 
+display_pod_leaders_query = "SELECT * from podL"
+podL = execute_read_query(connection, display_pod_leaders_query) ##Tuple
+########################### Display staff_member Query ##################### 
 
+for user in staff:
+    print(user[0],user[1],user[2], user[3])
+    
 
-
-
-for user in pod_leadr:
-  print(user[0],user[1],user[2], user[3])
-
-execute_query(connection,'drop table pod_leader')
+for user in pod:
+    print(user)
+ 
+for user in podL:
+    print(user)
+    
+execute_query(connection,'drop table pod')
+execute_query(connection,'drop table staff')
+execute_query(connection,'drop table podL')
