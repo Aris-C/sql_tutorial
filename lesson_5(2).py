@@ -111,20 +111,22 @@ add_pod_members_query = """
 INSERT INTO
   pod (name,cell,position)
 VALUES
-  ('Aris','510.205.0980','Senior Innovation Educator'),
-  ('Hyab','111.111.1111', 'Executive Director'),
-  ('Milan','(510) 435-2594','Curriculum Lead'),
-  ('Zyion','(415) 684-0505','Programs Director');
+  ('Aris','510.205.0980','Pod leader'),
+  ('Hyab','111.111.1111', 'Pod member'),
+  ('Milan','(510) 435-2594','Pod member'),
+  ('Zyion','(415) 684-0505','Pod member'),
+  ('Maurice','333-335-3333','Pod member');
 """
 
 add_pod_leaders_query = """
 INSERT INTO
   podL (name,cell,position)
 VALUES
-  ('Aris','510.205.0980','Senior Innovation Educator'),
-  ('Jacore','111.111.1111', 'Executive Director'),
-  ('Andrew','(510) 435-2594','Curriculum Lead'),
-  ('Richard','(415) 684-0505','Programs Director');
+  ('Aris','510.205.0980','Pod leader'),
+  ('Jacore','111.111.1111', 'Pod leader'),
+  ('Andrew','(510) 435-2594','Pod leader'),
+  ('Richard','(415) 684-0505','Pod leader'),
+  ('gabe','222-222-222','Pod leader');
 """
 ####################  Execute insert staff members query ##################
 execute_query(connection, add_staff_members_query)
@@ -145,14 +147,15 @@ pod = execute_read_query(connection, display_pod_query) ##Tuple
 display_pod_leaders_query = "SELECT * from podL"
 podL = execute_read_query(connection, display_pod_leaders_query) ##Tuple
 ########################### Display staff_member Query ##################### 
-
+print('\n')
 for user in staff:
     print(user[0],user[1],user[2], user[3])
     
-
+print('\n')
 for user in pod:
     print(user)
- 
+    
+print('\n')
 for user in podL:
     print(user)
     
